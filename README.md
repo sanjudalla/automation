@@ -10,7 +10,7 @@ Step 4 : Start Eclipse and configure it with selenium(webdriver)
 •	Create new project File > New > Project > Java Project
 •	Create new package
           Right click on project name and select New > Package
-•	Create New Class
+•	Create New Class.
          Right click on package and select New > Class
 •	Add external jar file to java build path
 1.	Right click on project > Select Properties > Select Java build path > Navigate to Libraries tab
