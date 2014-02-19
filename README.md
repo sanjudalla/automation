@@ -1,7 +1,7 @@
 automation
 ==========
 
-## Setup
+## setup
 
 1. Download and install Java in your system
 2. Download and install Eclipse <http://www.eclipse.org/downloads/>
