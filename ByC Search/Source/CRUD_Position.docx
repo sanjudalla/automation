@@ -1,0 +1,164 @@
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class CRUDposition {
+               
+public static void main(String[] args) throws Exception {
+   
+    WebDriver driver1 =new FirefoxDriver();         
+        
+	/*LOGIN into the application*/
+    
+    driver1.get("https://alphasecure.interfolio.com/");
+    CharSequence[] username = {"charlie.receiverinst"};
+    CharSequence[] password = {"abc123456"};
+    driver1.findElement(By.id("username")).sendKeys(username); 
+    driver1.findElement(By.id("password-login")).sendKeys(password); 
+    driver1.findElement(By.xpath("//div/div/div[1]/form[1]/fieldset/div[3]/input")).click();
+        
+         
+    /*LOGIN into the test window*/
+    
+    driver1.navigate().to("https://intf:intfbyc@byc-test.interfolio.com/");
+    Thread.sleep(5000);
+    driver1.findElement(By.linkText("Administration")).click();
+    Thread.sleep(8000);
+    driver1.findElement(By.linkText("Positions")).click();
+    Thread.sleep(5000);
+    driver1.findElement(By.linkText("New Position")).click();
+    Thread.sleep(5000);
+    WebDriverWait wait3 = new WebDriverWait(driver1,60);
+    wait3.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".new-position.btn.btn-info.btn-large")));
+    driver1.findElement(By.cssSelector(".new-position.btn.btn-info.btn-large")).click();
+
+    //1st step
+    String positionTitle="ptitle";
+    String positionLoc="pLoc";
+
+    WebDriverWait wait4 = new WebDriverWait(driver1,60);
+    wait4.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='name']")));
+    driver1.findElement(By.xpath("//input[@id='name']")).sendKeys(positionTitle);
+    driver1.findElement(By.id("location")).sendKeys(positionLoc);
+    driver1.findElement(By.xpath("//input[@value='2']")).click();
+    driver1.findElement(By.id("open_date_display")).sendKeys("Jan 2 2014");
+    driver1.findElement(By.id("close_date_display")).sendKeys("Feb 2 2014");
+    
+    WebElement e1 = driver1.findElement(By.id("cke_description"));
+    Actions actions1 = new Actions(driver1);
+    actions1.moveToElement(e1).click().perform();
+    actions1.sendKeys(username).perform();   
+
+    driver1.findElement(By.xpath("//button[@type='submit']")).click();
+    Thread.sleep(5000);
+    
+    //2nd step
+    driver1.findElement(By.xpath("//a[@id='add-document-btn']")).click();
+    Thread.sleep(5000);
+    Select doc=new Select(driver1.findElement(By.id("document_type_id")));
+    doc.selectByVisibleText("Cover Letter");
+    driver1.findElement(By.xpath("//form[@id='add-item-form']/div[4]/button[1]")).click();
+    Thread.sleep(5000);
+
+    driver1.findElement(By.linkText("Save & Continue")).click();
+    Thread.sleep(5000);
+    
+    //3rd step
+    driver1.findElement(By.xpath("//a[@id='add-document-btn']")).click();
+    Thread.sleep(5000);
+    driver1.findElement(By.name("name")).sendKeys("criteria name");
+    driver1.findElement(By.xpath("//form[@id='add-item-form']/div[4]/button[1]")).click();
+    Thread.sleep(5000);
+
+    driver1.findElement(By.linkText("Save & Continue")).click();
+    Thread.sleep(5000);
+
+    //4th step
+    driver1.findElement(By.xpath("//a[@id='add-document-btn']")).click();
+    Thread.sleep(5000);
+
+    Select form=new Select(driver1.findElement(By.id("custom_form_id")));
+    form.selectByVisibleText("Performance Testing");
+    driver1.findElement(By.xpath("//form[@id='add-item-form']/div[4]/button[1]")).click();
+    Thread.sleep(5000);
+
+    driver1.findElement(By.linkText("Save & Continue")).click();
+    Thread.sleep(5000);    
+
+    //5th step
+    
+    
+    driver1.findElement(By.xpath("//a[@id='add-document-btn']")).click();
+    driver1.findElement(By.xpath("//input[@id='filter']")).sendKeys("Notification Test 34");
+    WebDriverWait wait5 = new WebDriverWait(driver1,60);
+    wait5.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody[@id='manager-queue-content']/tr[1]/td[2]/button")));
+    WebElement e11 = driver1.findElement(By.xpath("//tbody[@id='manager-queue-content']/tr[1]/td[2]/button"));
+    Actions actions11 = new Actions(driver1);
+    actions11.moveToElement(e11).click().perform();
+    
+    Thread.sleep(5000);
+    driver1.findElement(By.linkText("Save & Continue")).click();
+    Thread.sleep(5000);
+
+    //6th step
+    //enter the file path onto the file-selection input field
+    WebDriverWait wait7 = new WebDriverWait(driver1,100);
+    wait7.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form[@id='position-form']/section[2]/div/p/a")));
+    driver1.findElement(By.xpath("//form[@id='position-form']/section[2]/div/p/a")).click();
+
+    WebElement uploadElement = driver1.findElement(By.id("file"));
+    String file="C:\\Users\\sanju.dalla\\Desktop\\a.txt";
+    uploadElement.sendKeys(file);
+    Thread.sleep(5000);
+    driver1.findElement(By.xpath("//form[@id='add-file-form']/div[4]/button[1]")).click();
+    Thread.sleep(5000);
+    
+    //Enter other fields
+     WebDriverWait wait8 = new WebDriverWait(driver1,60);
+     wait8.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='job_requisition_number']")));
+
+     driver1.findElement(By.xpath("//input[@id='job_requisition_number']")).sendKeys("job_requisition_number");
+     driver1.findElement(By.xpath("//input[@id='salary_range']")).sendKeys("salary_range");
+     Select term=new Select(driver1.findElement(By.id("position_term_id")));
+     term.selectByVisibleText("2 months");
+     driver1.findElement(By.xpath("//input[@id='funding_source']")).sendKeys("funding_source");
+     driver1.findElement(By.xpath("//textarea[@id='hiring_plan']")).sendKeys("hiring_plan");
+     driver1.findElement(By.xpath("//textarea[@id='notes']")).sendKeys("Notes");    
+     
+     WebDriverWait wait9 = new WebDriverWait(driver1,60);
+     wait9.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn.btn-primary.btn-large.btn-confirm")));
+     driver1.findElement(By.cssSelector(".btn.btn-primary.btn-large.btn-confirm")).click();
+     Thread.sleep(8000);
+     
+    
+    /*----------------------------------------------Change status------------------------------------------*/
+    driver1.findElement(By.xpath("//div[@id='position-overview']/div/div[2]/div/a[@class='position-action edit-status']")).click();
+    driver1.findElement(By.xpath("//div[@id='view-position-status']/div[2]/table/tbody/tr/td/div[1]/a[@class='dropdown change-status']")).click();
+    WebElement status = driver1.findElement(By.xpath("//div[@id='view-position-status']/div[2]/table/tbody/tr/td/div[1]/ul")); 
+	List<WebElement> status1=status.findElements(By.tagName("a"));
+	status1.get(2).click();
+	
+	driver1.findElement(By.xpath("//div[@id='view-position-status']/div[3]/button")).click();
+	Thread.sleep(8000);
+	driver1.findElement(By.xpath("//article[@id='content']/header/a[@class='position-return']")).click();
+	Thread.sleep(8000);
+
+    /*---------------------------------------------Delete Position------------------------------------------*/
+	driver1.findElement(By.xpath("//div[@id='position-content']/aside[2]/div/a")).click();   
+	WebElement status11=driver1.findElement(By.xpath("//div[@id='position-content']/aside[2]/div/ul/li[@class='status-item delete-position']"));
+	status11.click();
+	driver1.switchTo().alert().accept();
+    
+driver1.quit();
+
+	}
+
+}
+
+
